@@ -10,6 +10,7 @@
 #include<iphlpapi.h>
 
 #include<FormatLastError.h>
+#include<Messages.h>
 using namespace std;
 
 #pragma comment(lib, "WS2_32.lib")
@@ -101,6 +102,12 @@ void main()
 		if (iResult > 0)cout << recvbuffer << "(" << iResult << " Bytes)" << endl;
 		else if (result == 0) cout << "Connection closed" << endl;
 		else	cout << FormatLastError(WSAGetLastError(), szError) << endl;
+		
+		if (strcmp(recvbuffer, DECLINE_MESSAGE) == 0)
+		{
+			system("PAUSE");
+			break;
+		}
 		ZeroMemory(sendbuffer, BUFFER_LENGTH);
 		SetConsoleCP(1251);
 		cin.getline(sendbuffer, BUFFER_LENGTH);
